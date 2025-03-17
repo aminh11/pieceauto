@@ -6,14 +6,14 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class Items extends Model
+class Item extends Model
 {
     protected $fillable = [
         'name',
         'slug',
         'description',
         'image',
-        'prix',
+        'price',
         'is_active',
         'is_auction',
         'starting_price',
