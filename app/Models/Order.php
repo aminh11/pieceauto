@@ -15,4 +15,11 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class, 'order_item')
+            ->withPivot('quantity', 'unit_price')
+            ->withTimestamps();
+    }
 }

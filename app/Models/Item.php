@@ -1,34 +1,25 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 
 class Item extends Model
 {
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'image',
-        'price',
-        'is_active',
-        'is_auction',
-        'starting_price',
-    ];
-    public function category(): BelongsTo
-{
-    return $this->belongsTo(Category::class, 'category_id');
-}
+    use HasFactory;
 
-    protected static function booted()
+    protected $fillable = ['name', 'slug', 'price', 'description', 'image', 'is_active', 'is_auction', 'starting_price', 'category_id'];
+
+    public function category()
     {
-        static::creating(function ($item) {
-            if (empty($item->slug)) {
-                $item->slug = Str::slug($item->name);
-            }
-        });
+        return $this->belongsTo(Category::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_item')
+            ->withPivot('quantity', 'unit_price')
+            ->withTimestamps();
     }
 }
