@@ -17,6 +17,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Widgets\OrdersOverview;
+use App\Filament\Widgets\UsersOverview;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Roboto')
             ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('10rem')
+            ->brandLogoHeight('100px') // Correction ici
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -41,7 +43,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                
+                OrdersOverview::class,
+                UsersOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
